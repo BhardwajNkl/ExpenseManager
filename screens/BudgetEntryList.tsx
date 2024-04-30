@@ -1,6 +1,9 @@
 import React from "react";
+
 import { View, Text, FlatList, SafeAreaView, StyleSheet } from "react-native";
+
 import { useSelector } from "react-redux";
+
 import { RootState } from "../redux_store/rootReducer";
 
 export interface BudgetEntryInterface {
@@ -10,9 +13,11 @@ export interface BudgetEntryInterface {
 }
 
 const BudgetEntryList:React.FC = () => {
+  /* 
+    getting the list of budget entries
+  */
   const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice.data));
-  console.log("budget list")
-  console.log(budgetEntryData);
+
   const renderItem = ({ item }: { item: BudgetEntryInterface }) => (
     <View style={styles.item}>
       <Text>{item.itemName}</Text>
@@ -23,14 +28,13 @@ const BudgetEntryList:React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList data={budgetEntryData}
+      <FlatList 
+        data={budgetEntryData}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{ minHeight: 15 }}></View>}
-        ListEmptyComponent={() => <View><Text>No Items</Text></View>}
-      >
+        ListEmptyComponent={() => <View><Text>No Items</Text></View>}>
       </FlatList>
     </SafeAreaView>
-
   )
 }
 

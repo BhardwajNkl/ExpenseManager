@@ -1,38 +1,34 @@
 import React, { useState } from "react";
+
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
 import { StackNavigation } from "../App";
 
 import { useDispatch, useSelector } from "react-redux";
-import {actions} from '../redux_store/slice';
-
-import { useEffect } from "react";
-
-import { fetchData } from "../redux_store/slice";
 
 import { persistData } from "../redux_store/slice";
-import store from "../redux_store/configureStore";
 import { RootState } from "../redux_store/rootReducer";
 
 interface ScreenProps {
      navigation: StackNavigation
 }
-const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
 
+
+const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
     const dispatch = useDispatch();
 
+    /* 
+        getting the list of budget entries.
+        when user tries to save a new entry,
+        we first create a new array by appending the new entry and then state manipulation is done.
+    */
     const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice.data));
 
+    // state of the budget entry form
     const [entryData, setEntryData] = useState({itemName:'',plannedBudget:'',actualBudget:''});
 
-    // useEffect(()=>{
-    //     dispatch(fetchData());
-    // },[])
-
     const onSave = ()=>{
-        console.log('Data Saved');
-        // validate HERE
-        // dispatch(actions.addEntry(entryData));
+        // VALIDATE HERE
         const data = [...budgetEntryData, entryData];
         dispatch(persistData(data));
     }
