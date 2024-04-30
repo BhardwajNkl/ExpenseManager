@@ -6,6 +6,10 @@ import { StackNavigation } from "../App";
 import { useDispatch } from "react-redux";
 import {actions} from '../redux_store/slice';
 
+import { useEffect } from "react";
+
+import { fetchData } from "../redux_store/slice";
+
 interface ScreenProps {
      navigation: StackNavigation
 }
@@ -15,10 +19,14 @@ const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
 
     const [entryData, setEntryData] = useState({itemName:'',plannedBudget:'',actualBudget:''});
 
+    // useEffect(()=>{
+    //     dispatch(fetchData());
+    // },[])
+
     const onSave = ()=>{
         console.log('Data Saved');
         // validate HERE
-        dispatch(actions.addEntry({entryData}));
+        dispatch(actions.addEntry(entryData));
     }
 
     const onShowBudgetList = ()=>{

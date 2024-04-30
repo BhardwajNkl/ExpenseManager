@@ -10,7 +10,7 @@ export interface BudgetEntryInterface {
 }
 
 const BudgetEntryList:React.FC = () => {
-  const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice));
+  const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice.data));
   console.log(budgetEntryData)
   const renderItem = ({ item }: { item: BudgetEntryInterface }) => (
     <View style={styles.item}>
