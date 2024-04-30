@@ -3,12 +3,16 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
 import { StackNavigation } from "../App";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {actions} from '../redux_store/slice';
 
 import { useEffect } from "react";
 
 import { fetchData } from "../redux_store/slice";
+
+import { persistData } from "../redux_store/slice";
+import store from "../redux_store/configureStore";
+import { RootState } from "../redux_store/rootReducer";
 
 interface ScreenProps {
      navigation: StackNavigation
@@ -16,6 +20,8 @@ interface ScreenProps {
 const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
 
     const dispatch = useDispatch();
+
+    const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice.data));
 
     const [entryData, setEntryData] = useState({itemName:'',plannedBudget:'',actualBudget:''});
 
@@ -26,7 +32,9 @@ const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
     const onSave = ()=>{
         console.log('Data Saved');
         // validate HERE
-        dispatch(actions.addEntry(entryData));
+        // dispatch(actions.addEntry(entryData));
+        const data = [...budgetEntryData, entryData];
+        dispatch(persistData(data));
     }
 
     const onShowBudgetList = ()=>{
