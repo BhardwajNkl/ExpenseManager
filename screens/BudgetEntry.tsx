@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from "react-native";
 
 import { StackNavigation } from "../App";
 
@@ -27,10 +27,26 @@ const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
     // state of the budget entry form
     const [entryData, setEntryData] = useState({itemName:'',plannedBudget:'',actualBudget:''});
 
+
+    const isNumeric = (str:string):boolean => {
+        if (typeof str != "string") return false
+        return !isNaN(str) && !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+      }
+
     const onSave = ()=>{
-        // VALIDATE HERE
-        const data = [...budgetEntryData, entryData];
-        dispatch(persistData(data));
+        // basic input check
+        if(entryData.itemName != "" && entryData.plannedBudget != "" && entryData.actualBudget != ""){
+            // check if amounts are actually numbers
+            if(isNumeric(entryData.plannedBudget) && isNumeric(entryData.actualBudget)){
+                const data = [entryData, ...budgetEntryData];
+                dispatch(persistData(data));
+                Alert.alert("Data saved successfully!");
+            } else{
+                Alert.alert("Budget amount must be numeric!")
+            }
+        } else{
+            Alert.alert("All fields are mandatory!");
+        }
     }
 
     const onShowBudgetList = ()=>{
@@ -47,78 +63,111 @@ const BudgetEntry:React.FC<ScreenProps> = (navigation) => {
 
     return (
         <View style={styles.container}>
+            <View style={styles.topLayer}>
+                <Text style={styles.welcomeMessage}>WELCOME</Text>
+            </View>
             <View style={styles.formContainer}>
                 <View style={styles.formGroup}>
-                    <Text style={styles.label}>Enter Item Name</Text>
                     <TextInput style={styles.input} value={entryData.itemName}
                     onChangeText={(value)=>handleInputChange('itemName',value)}
+                    placeholder="Enter item name" placeholderTextColor={"white"}
+                    autoCapitalize="none"
                     ></TextInput>
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.label}>Planned Budget</Text>
                     <TextInput style={styles.input} value={entryData.plannedBudget}
                     onChangeText={(value)=>{handleInputChange('plannedBudget',value)}}
+                    placeholder="Enter planned budget" placeholderTextColor={"white"}
+                    keyboardType="numeric"
                     ></TextInput>
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.label}>Actual Budget</Text>
                     <TextInput style={styles.input} value={entryData.actualBudget}
                     onChangeText={(value)=>{handleInputChange('actualBudget',value)}}
+                    placeholder="Enter actual Expenses" placeholderTextColor={"white"}
+                    keyboardType="numeric"
                     ></TextInput>
                 </View>
                 <View style={styles.butonContainer}>
-                    <View style={styles.button}>
-                        <Button title="save" onPress={()=>onSave()} />
-                    </View>
-                    <View style={styles.button}>
-                        <Button title="show budget list" onPress={()=>onShowBudgetList()}>
-                    </Button></View>
+                        <TouchableOpacity style={styles.button} onPress={()=>onSave()}>
+                            <Text style={styles.buttonText}>SAVE</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={()=>onShowBudgetList()}>
+                            <Text style={styles.buttonText}>SHOW</Text>
+                        </TouchableOpacity>
                 </View>
             </View>
         </View>
     )
 }
 
+export const [MAIN_COLOR, SECONDARY_COLOR, COLOR_3, COLOR_4] = ["#FF0303","#FFFFFF","#D10000","black"];
+
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'#E0F2F1',
+        backgroundColor:MAIN_COLOR,
+        justifyContent:"center",
+        alignItems:"center",
         flex:1
+    },
+    topLayer:{
+        width:"80%",
+        backgroundColor:SECONDARY_COLOR
+    },
+
+    welcomeMessage:{
+        fontSize:26,
+        color:COLOR_4,
+        textAlign:"left",
+        paddingLeft:5
     },
 
     formContainer: {
-        padding: 10,
         width: '80%',
-        marginHorizontal: 'auto',
-        marginVertical:'auto'
     },
 
     formGroup: {
-        marginTop:5
+        marginTop:20
     },
 
     label: {
         textAlign: "center",
-        color:"#37474F",
+        color:SECONDARY_COLOR,
         fontSize:20
     },
 
     input: {
+        borderBottomWidth:2,
         borderStyle: "solid",
-        borderColor: 'black',
-        borderWidth: 2,
-        height: 40,
-    },
-
-    button: {
-        width: '49%'
+        borderColor: SECONDARY_COLOR,
+        borderRadius:10,
+        height: 50,
+        fontSize:18,
+        color:SECONDARY_COLOR,
     },
 
     butonContainer: {
-        paddingTop:10,
+        marginTop:20,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
-    }
+        justifyContent: "space-between",
+        alignItems:"center"
+    },
+
+    button: {
+        width: '48%',
+        backgroundColor:COLOR_3,
+        minHeight:50,
+        justifyContent:"center",
+        borderRadius:10
+    },
+
+    buttonText:{
+        fontSize:16,
+        fontWeight:"medium",
+        textAlign:"center",
+        color:SECONDARY_COLOR
+    },
 })
 
 export default BudgetEntry;
