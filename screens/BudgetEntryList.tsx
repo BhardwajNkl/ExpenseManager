@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux_store/rootReducer";
 
 import { COLOR_3, MAIN_COLOR, SECONDARY_COLOR } from "./BudgetEntry";
-
+import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faIndianRupee } from '@fortawesome/free-solid-svg-icons/faIndianRupee';
 import { faRemove, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -29,26 +29,26 @@ const BudgetEntryList:React.FC = () => {
       <Text style={styles.itemTitle}>{item.itemName}</Text>
 
       <Text style={styles.itemText}>Planned budget:
-        <View>
-          <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} />
-        </View>
+          {/* <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} /> */}
+          <Icon name="rupee" size={18} style={{color:SECONDARY_COLOR}} />
       {item.plannedBudget}
       </Text>
       <Text style={styles.itemText}>Actual budget: 
-        <View>
-            <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} />
-        </View>
+            {/* <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} /> */}
+            <Icon name="rupee" size={18} style={{color:SECONDARY_COLOR}} />
       {item.actualBudget}
       </Text>
 
       <View style={styles.actionButtonContainer}>
         <TouchableOpacity style={styles.actionButton}>
-        <FontAwesomeIcon color={SECONDARY_COLOR} icon={faEdit} />
+        {/* <FontAwesomeIcon color={SECONDARY_COLOR} icon={faEdit} /> */}
+        <Icon name="edit" color={SECONDARY_COLOR} size={25} />
         <Text style={styles.actionButtonText}>Edit</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.actionButton}>
-        <FontAwesomeIcon color={SECONDARY_COLOR} icon={faRemove} />
+        {/* <FontAwesomeIcon color={SECONDARY_COLOR} icon={faRemove} /> */}
+        <Icon name="trash" color={SECONDARY_COLOR} size={25} />
         <Text style={styles.actionButtonText}>Remove</Text>
         </TouchableOpacity>        
         

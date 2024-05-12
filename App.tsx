@@ -14,6 +14,7 @@ import store from './redux_store/configureStore';
 import { View } from 'react-native';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { faIndianRupee } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -32,9 +33,10 @@ const App = () => {
         >
           <Stack.Screen
           name='Budget Entry' component={BudgetEntry}
-          options={{title:'HOME BUDGET',headerStyle:{},
+          options={{title:'EXPENSE MANAGER',headerStyle:{},
             headerLeft:()=><View style={{paddingLeft:10}}>
-              <FontAwesomeIcon icon={faIndianRupee}></FontAwesomeIcon>
+              {/* <FontAwesomeIcon icon={faIndianRupee}></FontAwesomeIcon> */}
+              <Icon name='rupee' size={30} />
               </View>}}
 
           ></Stack.Screen>
