@@ -7,10 +7,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux_store/rootReducer";
 
 import { COLOR_3, MAIN_COLOR, SECONDARY_COLOR } from "./BudgetEntry";
+
 import Icon from "react-native-vector-icons/FontAwesome";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faIndianRupee } from '@fortawesome/free-solid-svg-icons/faIndianRupee';
-import { faRemove, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export interface BudgetEntryInterface {
   itemName: string,
@@ -19,9 +17,7 @@ export interface BudgetEntryInterface {
 }
 
 const BudgetEntryList:React.FC = () => {
-  /* 
-    getting the list of budget entries
-  */
+
   const budgetEntryData = useSelector(((state:RootState)=>state.budgetEntrySlice.data));
 
   const renderItem = ({ item }: { item: BudgetEntryInterface }) => (
@@ -29,25 +25,21 @@ const BudgetEntryList:React.FC = () => {
       <Text style={styles.itemTitle}>{item.itemName}</Text>
 
       <Text style={styles.itemText}>Planned budget:
-          {/* <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} /> */}
           <Icon name="rupee" size={18} style={{color:SECONDARY_COLOR}} />
       {item.plannedBudget}
       </Text>
       <Text style={styles.itemText}>Actual budget: 
-            {/* <FontAwesomeIcon style={{color:SECONDARY_COLOR}} icon={faIndianRupee} /> */}
             <Icon name="rupee" size={18} style={{color:SECONDARY_COLOR}} />
       {item.actualBudget}
       </Text>
 
       <View style={styles.actionButtonContainer}>
         <TouchableOpacity style={styles.actionButton}>
-        {/* <FontAwesomeIcon color={SECONDARY_COLOR} icon={faEdit} /> */}
         <Icon name="edit" color={SECONDARY_COLOR} size={25} />
         <Text style={styles.actionButtonText}>Edit</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.actionButton}>
-        {/* <FontAwesomeIcon color={SECONDARY_COLOR} icon={faRemove} /> */}
         <Icon name="trash" color={SECONDARY_COLOR} size={25} />
         <Text style={styles.actionButtonText}>Remove</Text>
         </TouchableOpacity>        
@@ -82,7 +74,6 @@ const styles = StyleSheet.create({
 
   listContainer:{
     width:"80%",
-    // padding:30
   },
 
   item: {

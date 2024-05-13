@@ -1,9 +1,3 @@
-import { BudgetEntryInterface } from "../screens/BudgetEntryList";
-
-// export interface JsonData{
-//     budgetEntryList:BudgetEntryInterface[]
-// }
-
 export const data = {
     "budgetEntryList":[
         {
