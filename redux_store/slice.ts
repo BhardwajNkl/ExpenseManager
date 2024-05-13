@@ -21,28 +21,30 @@ async ():Promise<BudgetEntryInterface[]> => {
             return [];
         }
     } catch (error) {
-        return [];
+        console.error(error);
+        throw Error("Error in fetching data");
     }
 });
 
 export const persistData = createAsyncThunk('budgetEntrySlice/persistData',
-async (data:BudgetEntryInterface[]) => {
+async (data:BudgetEntryInterface[]):Promise<BudgetEntryInterface[]> => {
     try {
         await AsyncStorage.setItem('reduxState',JSON.stringify(data));
         return data;
     } catch (error) {
-        return null;
+        console.error(error);
+        throw Error("Error in persisting data!");
     }
-})
+});
 
 
 const budgetEntrySlice = createSlice({
     name: "budgetEntrySlice",
     initialState,
     reducers: {
-        addEntry(state, action: { payload: BudgetEntryInterface, type: string }) {
-            state.data.push(action.payload);
-        }
+        // addEntry(state, action: { payload: BudgetEntryInterface, type: string }) {
+        //     state.data.push(action.payload);
+        // }
     },
     extraReducers(builder) {
         builder
@@ -58,10 +60,7 @@ const budgetEntrySlice = createSlice({
             state.error='some error';
         })
         .addCase(persistData.fulfilled,(state, action)=>{
-            // update the state 
-            if(action.payload!=null){
-                state.data = action.payload;
-            }
+            state.data = action.payload;
         })
         
     },
